@@ -2,6 +2,8 @@
 
 Постановщик ставит задачи по строительным объектам, исполнители берут их в работу и отправляют на проверку. Каждая смена статуса попадает в историю.
 
+**Демо:** https://mini-crm-five-mocha.vercel.app
+
 **Стек:** React 19 + TypeScript, Vite, Tailwind v4 + shadcn/ui, TanStack Query, Zustand, React Router, Supabase (Postgres + Auth + RLS).
 
 - [Объяснение для руководителя](docs/for-manager.md)
