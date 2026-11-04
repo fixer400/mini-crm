@@ -85,4 +85,13 @@
   body {
     @apply bg-background text-foreground antialiased;
   }
+
+  /* Tailwind v4 убрал pointer у кнопок по умолчанию — возвращаем для всех кликабельных элементов. */
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']),
+  [role='menuitem']:not([data-disabled]),
+  [role='option']:not([data-disabled]),
+  [role='combobox']:not(:disabled) {
+    cursor: pointer;
+  }
 }
