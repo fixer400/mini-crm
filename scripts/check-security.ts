@@ -7,7 +7,7 @@
  * Нужны данные из npm run seed. Скрипт ничего не ломает, если защита работает.
  * service_role НЕ используется — только публичный ключ.
  */
-import { anonClient, requireEnv, signedInClient } from './lib.ts'
+import { ANON_KEY, anonClient, requireEnv, signedInClient, SUPABASE_URL } from './lib.ts'
 
 const password = requireEnv('SEED_PASSWORD')
 let failed = 0
@@ -44,8 +44,15 @@ async function main() {
 
   console.log('\nРегистрация и анонимный доступ')
   {
-    const { error } = await anon.auth.signUp({ email: `intruder${Date.now()}@example.com`, password: 'Passw0rd!123' })
-    report(Boolean(error), 'открытая регистрация отключена', error?.message ?? 'регистрация прошла!')
+    // Читаем публичные настройки Auth, а не пробуем зарегистрироваться:
+    // если регистрация открыта, проверка не должна создавать лишнего пользователя.
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/settings`, { headers: { apikey: ANON_KEY } })
+    const settings = (await res.json()) as { disable_signup?: boolean }
+    report(
+      settings.disable_signup === true,
+      'открытая регистрация отключена',
+      settings.disable_signup ? undefined : 'Authentication → Email → выключите «Allow new users to sign up»',
+    )
   }
   {
     const { data, error } = await anon.from('tasks').select('id')
