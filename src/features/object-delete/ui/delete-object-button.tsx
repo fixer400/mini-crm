@@ -3,6 +3,7 @@ import { Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { deleteObject, objectKeys, type ConstructionObject } from '@/entities/object'
 import { getErrorMessage } from '@/shared/api'
+import { plural } from '@/shared/lib'
 import { ConfirmDialog } from '@/shared/ui/custom'
 import { Button } from '@/shared/ui/shadcn/button'
 
@@ -39,7 +40,7 @@ export function DeleteObjectButton({ object, tasksCount, onDeleted }: DeleteObje
       title={`Удалить объект «${object.name}»?`}
       description={
         tasksCount > 0
-          ? `В объекте ${tasksCount} задач(и). Объект с задачами удалить нельзя — сначала удалите или перенесите задачи.`
+          ? `В объекте ${tasksCount} ${plural(tasksCount, ['задача', 'задачи', 'задач'])}. Объект с задачами удалить нельзя — сначала удалите или перенесите задачи.`
           : 'Действие нельзя отменить.'
       }
       confirmText="Удалить"

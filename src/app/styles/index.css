@@ -78,6 +78,14 @@
   --color-status-rework-foreground: var(--status-rework-foreground);
 }
 
+/* Прокрутка без видимой полосы — для горизонтальных лент на мобильных. */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

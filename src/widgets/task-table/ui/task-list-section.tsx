@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useTasksQuery, type TaskStatus, type TasksFilter } from '@/entities/task'
 import { EmptyState, ErrorState, PageLoader } from '@/shared/ui/custom'
+import { TaskCardList } from './task-card-list'
 import { TaskStatusFilter } from './task-status-filter'
 import { TaskTable } from './task-table'
 
@@ -34,10 +35,19 @@ export function TaskListSection({
   const visible = status ? query.data.filter((t) => t.status === status) : query.data
 
   return (
-    <div className="grid gap-4">
+    // grid-cols-1 = minmax(0, 1fr): колонка не растягивается под ширину таблицы,
+    // иначе на узком экране прокручивалась бы вся страница.
+    <div className="grid grid-cols-1 gap-4">
       <TaskStatusFilter value={status} onChange={setStatus} counts={counts} total={query.data.length} />
       {visible.length ? (
-        <TaskTable tasks={visible} hideObject={hideObject} hideAssignee={hideAssignee} />
+        <>
+          <div className="md:hidden">
+            <TaskCardList tasks={visible} hideObject={hideObject} hideAssignee={hideAssignee} />
+          </div>
+          <div className="hidden md:block">
+            <TaskTable tasks={visible} hideObject={hideObject} hideAssignee={hideAssignee} />
+          </div>
+        </>
       ) : (
         <EmptyState title="Нет задач с таким статусом" />
       )}

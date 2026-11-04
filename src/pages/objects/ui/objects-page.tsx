@@ -4,7 +4,7 @@ import { useObjectsQuery } from '@/entities/object'
 import { useIsManager } from '@/entities/session'
 import { EmptyState, ErrorState, PageHeader, PageLoader } from '@/shared/ui/custom'
 import { Button } from '@/shared/ui/shadcn/button'
-import { ObjectTable } from '@/widgets/object-table'
+import { ObjectCardList, ObjectTable } from '@/widgets/object-table'
 
 export function ObjectsPage() {
   const isManager = useIsManager()
@@ -34,7 +34,14 @@ export function ObjectsPage() {
       ) : query.isError ? (
         <ErrorState error={query.error} onRetry={() => query.refetch()} />
       ) : query.data.length ? (
-        <ObjectTable objects={query.data} />
+        <>
+          <div className="md:hidden">
+            <ObjectCardList objects={query.data} />
+          </div>
+          <div className="hidden md:block">
+            <ObjectTable objects={query.data} />
+          </div>
+        </>
       ) : (
         <EmptyState
           title="Объектов пока нет"

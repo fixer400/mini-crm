@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router'
-import { Building2, ChevronDown } from 'lucide-react'
+import { Building2, ChevronDown, CircleUser } from 'lucide-react'
 import { SignOutMenuItem } from '@/features/auth'
 import { USER_ROLE_LABEL, useViewer } from '@/entities/session'
 import { routes } from '@/shared/config'
@@ -15,7 +15,7 @@ import {
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   cn(
-    'rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent',
+    'rounded-md px-2.5 py-2 text-sm font-medium whitespace-nowrap transition-colors hover:bg-accent sm:px-3',
     isActive ? 'bg-accent text-foreground' : 'text-muted-foreground',
   )
 
@@ -25,8 +25,8 @@ export function AppHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b bg-card">
-      <div className="mx-auto flex h-14 max-w-6xl items-center gap-4 px-4">
-        <NavLink to={routes.objects} className="flex items-center gap-2 font-semibold">
+      <div className="mx-auto flex h-14 max-w-6xl items-center gap-2 px-4 sm:gap-4">
+        <NavLink to={routes.objects} className="flex shrink-0 items-center gap-2 font-semibold" aria-label="На главную">
           <Building2 className="size-5" />
           <span className="hidden sm:inline">Объекты и задачи</span>
         </NavLink>
@@ -43,9 +43,11 @@ export function AppHeader() {
         <div className="ml-auto">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="gap-2">
-                <span className="max-w-40 truncate">{viewer.full_name}</span>
-                <ChevronDown className="text-muted-foreground" />
+              <Button variant="ghost" className="gap-2 px-2 sm:px-3" aria-label="Меню пользователя">
+                {/* На телефоне вместо имени — иконка, имя видно в выпадающем меню */}
+                <CircleUser className="size-5 sm:hidden" />
+                <span className="hidden max-w-40 truncate sm:inline">{viewer.full_name}</span>
+                <ChevronDown className="hidden text-muted-foreground sm:block" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">

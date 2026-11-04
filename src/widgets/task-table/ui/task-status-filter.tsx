@@ -17,12 +17,18 @@ export function TaskStatusFilter({ value, onChange, counts, total }: TaskStatusF
   ]
 
   return (
-    <div className="flex flex-wrap gap-2" role="group" aria-label="Фильтр по статусу">
+    // На телефоне — лента с горизонтальной прокруткой до краёв экрана, на десктопе — перенос строк.
+    <div
+      className="scrollbar-none -mx-4 flex gap-2 overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0"
+      role="group"
+      aria-label="Фильтр по статусу"
+    >
       {options.map((o) => (
         <Button
           key={o.key ?? 'all'}
           size="sm"
           variant={value === o.key ? 'default' : 'outline'}
+          className="shrink-0"
           onClick={() => onChange(o.key)}
           aria-pressed={value === o.key}
         >

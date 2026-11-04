@@ -45,6 +45,7 @@ export function TaskStatusActions({ task }: TaskStatusActionsProps) {
           <Button
             key={t.to}
             variant={t.requiresComment ? 'outline' : 'default'}
+            className="flex-1 sm:flex-none"
             disabled={mutation.isPending}
             onClick={() => handleClick(t)}
           >
